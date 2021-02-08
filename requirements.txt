@@ -1,0 +1,5 @@
+requests==2.23.0
+bs4==0.0.1
+pandas==1.2.0
+psycopg2==2.8.6
+schedule==1.0.0
