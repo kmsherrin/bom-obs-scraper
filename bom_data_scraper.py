@@ -113,7 +113,11 @@ def scrape_data(location:str):
     for table in table_df_list: # We will only look at the first asthat is todays obs
         print(table)
         # Get the row that we are looking for (aka 3pm observations)
-        three_pm_row = table.loc[table['Time (AEDT)'] == '3:00 pm']
+
+	    three_pm_row = table.loc[table['Time (AEDT)'] == '3:00 pm']
+        if len(three_pm_row) < 1:
+            three_pm_row = table.loc[table['Time (AEDT)'] == '9:00 am]
+
    
         if len(three_pm_row) > 0:
             wind_gust_speed = extract_wind_gust_speed(str(three_pm_row['Wind Speed (km/h) (knots)'].iloc[0]))
@@ -145,6 +149,8 @@ def scraper_routine():
 
 # And we use schedule to make this happen at 3:15pm everyday
 schedule.every().day.at("15:25").do(scraper_routine)
+schedule.every().day.at("16:25").do(scraper_routine)
+schedule.every().day.at("9:25").do(scraper_routine)
 
 # keep this alive so that shcedule can do its magic
 while True:
